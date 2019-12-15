@@ -37,9 +37,11 @@ export default class LoginPage extends Component {
   	}
 
   	login = () =>{
+      console.log("I am inside login()")
   		const {employee_code,userPassword} = this.state;
   		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
   		if(employee_code==""){
+        console.log("emp code is empty")
   			//alert("Please enter Email address");
   		  this.setState({employee_code:'Please enter Emplyee id'})
 
@@ -47,17 +49,47 @@ export default class LoginPage extends Component {
 
   		else if(reg.test(employee_code) === false)
   		{
+        console.log("regex error")
   		//alert("Email is Not Correct");
   		this.setState({employee_code:'Emplyee id is Not Correct'})
   		return false;
   		  }
 
   		else if(userPassword==""){
+        console.log("password is empty")
   		this.setState({employee_code:'Please enter password'})
   		}
   		else{
+        console.log("I am going to call login api")
+        var data = JSON.stringify({
+  				// we will pass our input data to server
+  				employee_code: employee_code,
+  				password: userPassword,
+          device_id: "jdffhdf",
+          device_type: "android"
+  			})
 
-  		fetch('http://erpportaltest.xeamventures.com/api/v1/login',{
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+xhr.timeout = 60000;
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+    if (request.status === 200) {
+      this.props.navigation.navigate("Welcomepage");
+    }else{
+      alert(request.responseText.error);
+    }
+  }
+});
+
+xhr.open("POST", "http://erpportaltest.xeamventures.com/api/v1/login");
+xhr.setRequestHeader("accept", "application/json");
+xhr.setRequestHeader("content-type", "application/json");
+
+
+xhr.send(data);
+  		/*fetch('http://erpportaltest.xeamventures.com/api/v1/login',{
   			method:'post',
   			header:{
   				'Accept': 'application/json',
@@ -70,7 +102,7 @@ export default class LoginPage extends Component {
   			})
 
   		})
-  		.then((response) => response.json())
+  		.then((response) => if(response.ok){response.json()})
   		 .then((responseJson)=>{
   			 if(responseJson == "ok"){
   				 // redirect to profile page
@@ -83,7 +115,7 @@ export default class LoginPage extends Component {
   		 .catch((error)=>{
   		 console.error(error);
   		 });
-  		}
+  		}*/
 
 
   		Keyboard.dismiss();
@@ -104,6 +136,8 @@ export default class LoginPage extends Component {
           placeholder="Emplyee Code"
           autoCapitalize={'none'}
           returnKeyType={'done'}
+          value={this.state.employee_code}
+          onChangeText={(value) => context.setState({ employee_code: value })}
           autoCorrect={false}
         />
         <UserInput
@@ -112,7 +146,8 @@ export default class LoginPage extends Component {
           placeholder="Password"
           returnKeyType={'done'}
           autoCapitalize={'none'}
-
+          value={this.state.userPassword}
+          onChangeText={(value) => this.setState({ userPassword: value })}
           autoCorrect={false}
         />
 
@@ -124,7 +159,7 @@ export default class LoginPage extends Component {
 
           <Button
             style={styles.button}
-            onPress={() => navigate('welcome')}>
+            onPress={() => this.login()}>
             SUBMIT
           </Button>
         </Card>
