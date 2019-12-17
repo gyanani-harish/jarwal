@@ -25,7 +25,7 @@ export default class Welcomepage extends Component {
         <Card>
           <CardTitle>
             <Text style={{fontSize:50, color: 'black',left:140,alignItems: 'center',top:190}}>WELCOME</Text>
-            <Text style={{fontSize:30, color: 'black',top:260,alignItems: 'center',right:120}}>Employee Name Here</Text>
+            <Text style={{fontSize:30, color: 'black',top:260,alignItems: 'center',right:120}}>{this.props.navigation.state.params.abc}</Text>
           </CardTitle>
 
             <Button
