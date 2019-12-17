@@ -81,7 +81,7 @@ xhr.addEventListener("readystatechange", function () {
     }
     if (xhr.status === 200) {
       console.log("Successfully200")
-      context.props.navigation.navigate("welcome");
+      context.props.navigation.navigate("welcome",{abc:'Navin'});
     }else{
       console.log("inside error")
       alert(xhr.responseText);
