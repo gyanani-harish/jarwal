@@ -21,11 +21,14 @@ import Button from 'react-native-button';
 export default class Welcomepage extends Component {
 
     render () {
+	    var userObj = JSON.parse(this.props.navigation.state.params.userObj);
 		return(
         <Card>
           <CardTitle>
             <Text style={{fontSize:50, color: 'black',left:140,alignItems: 'center',top:190}}>WELCOME</Text>
-            <Text style={{fontSize:30, color: 'black',top:260,alignItems: 'center',right:120}}>Employee Name Here</Text>
+            <Text style={{fontSize:30, color: 'black',top:260,alignItems: 'center',right:120}}>{userObj.success.user.employee.fullname}</Text>
+	    <Text style={{fontSize:30, color: 'black',top:260,alignItems: 'center',right:120}}>{userObj.success.user.email}</Text>
+			
           </CardTitle>
 
             <Button
