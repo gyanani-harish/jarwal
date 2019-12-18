@@ -75,7 +75,7 @@ export default class LoginPage extends Component {
   			 if(responseJson == "ok"){
   				 // redirect to profile page
   				 alert("Successfully Login");
-  				 this.props.navigation.navigate("Welcomepage");
+  				 this.props.navigation.navigate("welcome",{userObj:xhr.responseText});
   			 }else{
   				 alert("Wrong Login Details");
   			 }
